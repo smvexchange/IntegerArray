@@ -1,12 +1,14 @@
 #include "IntegerArray.h"
+#include "Bad_range.h"
+#include "Bad_length.h"
 
 IntegerArray::IntegerArray() = default;
 
 IntegerArray::IntegerArray(int length) : length_(length) {
 	if (length < 0) {
-		throw "Length cannot 0 or less.";
+		throw Bad_length();
 	}
-	data_ = new int[length];
+	data_ = new int[length] {};
 };
 
 IntegerArray::~IntegerArray() {
@@ -23,7 +25,7 @@ IntegerArray::IntegerArray(IntegerArray& array) {
 int& IntegerArray::operator[](int index)
 {
 	if (index < 0 && index > length_) {
-		throw "Index is incorrect";
+		throw Bad_range();
 	}
 	return data_[index];
 }
@@ -40,8 +42,8 @@ int IntegerArray::get_length() {
 
 void IntegerArray::reallocate(int new_length) {
 	erase();
-	if (new_length <= 0) {
-		return;
+	if (new_length < 0) {
+		throw Bad_length();
 	}
 	data_ = new int[new_length];
 	length_ = new_length;
@@ -49,11 +51,14 @@ void IntegerArray::reallocate(int new_length) {
 
 void IntegerArray::resize(int new_length) {
 	if (length_ == new_length) {
-		return;
+		throw Bad_length();
 	}
-	if (new_length <= 0) {
+	if (new_length == 0) {
 		erase();
 		return;
+	}
+	if (new_length < 0) {
+		throw Bad_length();
 	}
 	int* new_data = new int[new_length];
 	int elementsToCopy = new_length > length_ ? length_ : new_length ;
