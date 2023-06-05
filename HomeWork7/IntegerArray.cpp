@@ -29,7 +29,7 @@ IntegerArray::IntegerArray(IntegerArray& array)
 
 int& IntegerArray::operator[](int index)
 {
-	if (index < 0 && index > length_)
+	if (index < 0 || index > length_)
 	{
 		throw Bad_range();
 	}
@@ -112,7 +112,7 @@ void IntegerArray::print()
 
 void IntegerArray::insertBefore(int index, int value)
 {
-	if (index < 0 && index > length_)
+	if (index < 0 || index > length_)
 	{
 		throw Bad_range();
 	}

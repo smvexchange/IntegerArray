@@ -33,6 +33,8 @@ int main() {
         array.remove(3);
         array.print();
 
+        array.insertBefore(-2, 22);
+
         std::cout << "Find value 6 in the array:" << std::endl;
         std::cout << array.findElement(6) << std::endl;
     }
